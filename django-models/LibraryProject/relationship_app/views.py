@@ -9,6 +9,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import permission_required
+from relationship_app.models import Book
 
 # Function-based view for listing books
 def book_list(request):
@@ -81,3 +83,18 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return HttpResponse("Welcome to the Member page!")
+
+
+@permission_required('relationship_app.can_add_book', raise_exception=True)
+def add_book(request):
+    # Logic to add a book
+    return render(request, 'add_book.html')
+
+@permission_required('relationship_app.can_change_book', raise_exception=True)
+def change_book(request, book_id):
+    # Logic to change a book
+    return render(request, 'change_book.html')
+
+@permission_required('relationship_app.can_delete_book', raise_exception=True)
+def delete_book(request, book_id):
+    # Logic
