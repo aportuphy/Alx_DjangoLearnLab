@@ -9,6 +9,6 @@ urlpatterns = [
 
 urlpatterns += [
     path('login/', views.MyLoginView.as_view(), name='login'),
-    path('logout/', views.MyLogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
     path('register/', views.register, name='register'),
 ]
