@@ -1,14 +1,28 @@
 from django.shortcuts import render
-from django.views import View
-from relationship_app.models import Book, Library
+from django.views.generic import DetailView
+from .models import Book, Library
+from .forms import UserLoginForm, UserRegisterForm
 
-# Function-based View for listing all books
-def list_books(request):
-    books = Book.objects.all()
-    return render(request, 'list_books.html', {'books': books})
+# Function-based view for listing books
+def book_list(request):
+    books = Book.objects.all()  # Retrieve all books from the database
+    return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# Class-based View for displaying a specific library's details
-class LibraryDetailView(View):
-    def get(self, request, library_name):
-        library = Library.objects.get(name=library_name)
-        return render(request, 'library_detail.html', {'library': library})
+# Class-based view for library details
+class LibraryDetailView(DetailView):
+    model = Library
+    template_name = 'relationship_app/library_detail.html'  # Correct template path
+    context_object_name = 'library'
+
+# Authentication views (login, register)
+def login_view(request):
+    # Implement login logic here
+    pass
+
+def logout_view(request):
+    # Implement logout logic here
+    pass
+
+def register_view(request):
+    # Implement registration logic here
+    pass
