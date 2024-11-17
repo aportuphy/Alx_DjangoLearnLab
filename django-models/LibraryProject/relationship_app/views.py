@@ -38,11 +38,13 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return render(request, 'registration/login.html')
+            user = form.save()
+            login(request, user)  # Log the user in after successful registration
+            return redirect('login')  # Redirect to the login page after registration
     else:
-        form = UserCreationForm()
-    return render(request, 'registration/register.html', {'form': form})
+        form = UserCreationForm()  # Create an empty form instance
+
+    return render(request, 'relationship_app/register.html', {'form': form})
 
 # Login View (Django's built-in)
 class MyLoginView(LoginView):
