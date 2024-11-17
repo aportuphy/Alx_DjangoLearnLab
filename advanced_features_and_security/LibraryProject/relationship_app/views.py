@@ -124,3 +124,22 @@ def delete_book(request, book_id):
         book.delete()
         return redirect('list_books')  # Redirect to the list of books
     return render(request, 'relationship_app/delete_book.html', {'book': book})
+
+    from django.contrib.auth.decorators import permission_required
+from django.shortcuts import render
+from .models import Book
+
+@permission_required('bookshelf.can_view', raise_exception=True)
+def book_list(request):
+    books = Book.objects.all()
+    return render(request, 'bookshelf/book_list.html', {'books': books})
+
+@permission_required('bookshelf.can_create', raise_exception=True)
+def add_book(request):
+    # Logic for adding book
+    pass
+
+@permission_required('bookshelf.can_edit', raise_exception=True)
+def edit_book(request, book_id):
+    # Logic for editing book
+    pass
