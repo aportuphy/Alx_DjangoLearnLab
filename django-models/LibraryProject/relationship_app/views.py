@@ -3,6 +3,9 @@ from django.views.generic.detail import DetailView
 from .models import Library
 from .models import Book
 from .forms import UserLoginForm, UserRegisterForm
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import render
+from django.contrib.auth.forms import UserCreationForm
 
 # Function-based view for listing books
 def book_list(request):
@@ -27,3 +30,22 @@ def logout_view(request):
 def register_view(request):
     # Implement registration logic here
     pass
+
+# Registration View
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'registration/login.html')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/register.html', {'form': form})
+
+# Login View (Django's built-in)
+class MyLoginView(LoginView):
+    template_name = 'registration/login.html'
+
+# Logout View (Django's built-in)
+class MyLogoutView(LogoutView):
+    template_name = 'registration/logout.html'
