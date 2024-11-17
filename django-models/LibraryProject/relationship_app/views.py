@@ -55,23 +55,29 @@ class MyLoginView(LoginView):
 class MyLogoutView(LogoutView):
     template_name = 'registration/logout.html'
 
+# Utility function to check if the user is an Admin
 def is_admin(user):
     return user.userprofile.role == 'Admin'
 
+# Utility function to check if the user is a Librarian
 def is_librarian(user):
     return user.userprofile.role == 'Librarian'
 
+# Utility function to check if the user is a Member
 def is_member(user):
     return user.userprofile.role == 'Member'
 
+# Admin view - accessible only to Admins
 @user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, 'admin_view.html')
+    return HttpResponse("Welcome to the Admin page!")
 
+# Librarian view - accessible only to Librarians
 @user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, 'librarian_view.html')
+    return HttpResponse("Welcome to the Librarian page!")
 
+# Member view - accessible only to Members
 @user_passes_test(is_member)
 def member_view(request):
-    return render(request, 'member_view.html')
+    return HttpResponse("Welcome to the Member page!")
