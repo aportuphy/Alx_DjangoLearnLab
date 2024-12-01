@@ -47,4 +47,4 @@ class BookListView(generics.ListAPIView):
 class BookCreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    permission_classes = [IsAuthenticated
+    permission_classes = [IsAuthenticated]
